@@ -1,6 +1,7 @@
 import React from 'react';
 import { getCars } from './utils/car';
 import CarList from './components/CarList';
+import Header from './components/Header';
 
 function App() {
   const [carState, setCarState] = React.useState(getCars());
@@ -47,7 +48,8 @@ function App() {
 
   return (
     <div>
-      <div className="block p-6 rounded-lg shadow-lg bg-white max-w-sm my-5">
+      <Header />
+      <div className="block p-6 rounded-lg shadow-lg bg-white max-w-sm my-5 mx-auto">
         <form onSubmit={(event) => addCarEventHandler(event)}>
           <div className="form-group mb-6">
             <label className="form-label inline-block mb-2 text-gray-700">Car Name</label>

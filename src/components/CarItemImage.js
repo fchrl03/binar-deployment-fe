@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 function CarItemImage({ imageUrl }) {
   return (
@@ -7,5 +8,9 @@ function CarItemImage({ imageUrl }) {
     </div>
   );
 }
+
+CarItemImage.propTypes = {
+  imageUrl: PropTypes.string.isRequired,
+};
 
 export default CarItemImage;

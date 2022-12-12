@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import CarItem from './CarItem';
 
 function CarList({ cars }) {
@@ -10,5 +11,9 @@ function CarList({ cars }) {
     </div>
   );
 }
+
+CarList.propTypes = {
+  cars: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 export default CarList;

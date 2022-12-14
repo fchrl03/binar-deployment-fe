@@ -2,13 +2,44 @@ import React from 'react';
 import { getCars } from './utils/car';
 import CarList from './components/CarList';
 import Header from './components/Header';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function App() {
+  const navigate = useNavigate();
+
   const [carState, setCarState] = React.useState(getCars());
   const [name, setName] = React.useState('');
   const [price, setPrice] = React.useState(0);
   const [imageUrl, setImageUrl] = React.useState('');
   const [year, setYear] = React.useState(0);
+  const [loggedInUser, setLoggedInUser] = React.useState();
+
+  React.useEffect(() => {
+    const checkIsLoggedIn = async () => {
+      try {
+        const jwtToken = localStorage.getItem('user_token');
+
+        const validateTokenResponse = await axios.get('http://localhost:2000/auth/me', {
+          headers: {
+            Authorization: `Bearer ${jwtToken}`,
+          },
+        });
+
+        if (validateTokenResponse.status !== 200) {
+          navigate('/login');
+        } else {
+          console.log(validateTokenResponse);
+          setLoggedInUser(validateTokenResponse.data.data);
+        }
+      } catch (err) {
+        console.log(err);
+        navigate('/login');
+      }
+    };
+
+    checkIsLoggedIn();
+  }, [navigate]);
 
   const nameEventHandler = (event) => {
     const value = event.target.value;
@@ -46,9 +77,18 @@ function App() {
     }
   };
 
+  const logoutUserHandler = () => {
+    const loggedOut = localStorage.removeItem('user_token');
+    if (loggedOut === undefined) {
+      navigate('/login');
+    }
+  };
+
   return (
     <div>
       <Header />
+      <h2>Selamat datang, {loggedInUser ? loggedInUser.name : 'Loading...'}</h2>
+      <button onClick={() => logoutUserHandler()}>Logout</button>
       <div className="block p-6 rounded-lg shadow-lg bg-white max-w-sm my-5 mx-auto">
         <form onSubmit={(event) => addCarEventHandler(event)}>
           <div className="form-group mb-6">

@@ -1,16 +1,16 @@
 import React from 'react';
 
-function RegisterInput({ name, email, password, onSubmit }) {
+function RegisterInput({ name, email, password, onFormSubmit }) {
   <div>
-    <form onSubmit={onSubmit}>
+    <form onSubmit={() => onFormSubmit()}>
       <div>
-        Name: <input type="text" onChange={name} placeholder="Input Name" />
+        Name: <input type="text" onChange={() => name()} placeholder="Input Name" />
       </div>
       <div>
-        Email: <input type="email" onChange={email} placeholder="Input Email" />
+        Email: <input type="email" onChange={() => email()} placeholder="Input Email" />
       </div>
       <div>
-        Password: <input type="text" onChange={password} placeholder="Input Password" />
+        Password: <input type="text" onChange={() => password()} placeholder="Input Password" />
       </div>
       <div>
         <button type="submit">Submit</button>

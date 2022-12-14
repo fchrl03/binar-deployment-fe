@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import ProductInput from './components/ProductInput';
 import { ProductPage, RegisterPage } from './pages';
+import LoginPage from './pages/LoginPage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -12,8 +12,8 @@ root.render(
     <Routes>
       <Route path="/" element={<App />} />
       <Route path="/product" element={<ProductPage />} />
-      <Route path="/product/add" element={<ProductInput />} />
       <Route path="/register" element={<RegisterPage />} />
+      <Route path="/login" element={<LoginPage />} />
     </Routes>
   </BrowserRouter>
 );

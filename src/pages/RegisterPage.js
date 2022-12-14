@@ -29,7 +29,6 @@ function RegisterPage() {
 
   const onSubmitButtonHandler = async (e) => {
     e.preventDefault();
-
     try {
       const payload = {
         name,
@@ -38,7 +37,7 @@ function RegisterPage() {
       };
 
       const registerResponse = await axios.post('http://localhost:2000/register', payload);
-      if (registerResponse.status_code === 200) {
+      if (registerResponse.status_code === 201) {
         console.log('successful register');
         navigate('/login');
       }
@@ -48,7 +47,21 @@ function RegisterPage() {
   };
   return (
     <div>
-      <RegisterInput name={(e) => onChangeNameHandler(e)} email={(e) => onChangeEmailHandler(e)} password={(e) => onChangePasswordHandler(e)} onSubmit={(e) => onSubmitButtonHandler(e)} />
+      {/* <form>
+        <div>
+          Name: <input type="text" onChange={(e) => onChangeNameHandler(e)} placeholder="Input Name" />
+        </div>
+        <div>
+          Email: <input type="email" onChange={(e) => onChangeEmailHandler(e)} placeholder="Input Email" />
+        </div>
+        <div>
+          Password: <input type="text" onChange={(e) => onChangePasswordHandler(e)} placeholder="Input Password" />
+        </div>
+        <div>
+          <button onClick={(e) => onSubmitButtonHandler(e)}>Submit</button>
+        </div>
+      </form> */}
+      <RegisterInput name={(e) => onChangeNameHandler(e)} email={(e) => onChangeEmailHandler(e)} password={(e) => onChangePasswordHandler(e)} onFormSubmit={(e) => onSubmitButtonHandler(e)} />
     </div>
   );
 }

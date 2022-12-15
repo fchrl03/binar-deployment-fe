@@ -33,7 +33,7 @@ function LoginPage() {
       if (loginResponse.status === 200) {
         const jwtToken = loginResponse.data.data.token;
         localStorage.setItem('user_token', jwtToken);
-        navigate('/');
+        navigate('/product');
       }
     } catch (err) {
       console.log('unsuccessfull login', err);
@@ -45,16 +45,13 @@ function LoginPage() {
       const userToLoginPayload = {
         google_credential: credentialResponse.credential,
       };
-      console.log('coba', userToLoginPayload);
       const loginGoogleRequest = await axios.post('http://localhost:2000/login-google', userToLoginPayload);
-      console.log('coba1', loginGoogleRequest);
       const loginGoogleResponse = loginGoogleRequest.data;
-      console.log('coba2', loginGoogleResponse);
 
       if (loginGoogleResponse.status) {
-        localStorage.setItem('token', loginGoogleResponse.data.token);
+        localStorage.setItem('user_token', loginGoogleResponse.data.token);
 
-        navigate('/');
+        navigate('/product');
       }
     } catch (err) {
       console.log('Login Gagal: ', err);
@@ -73,18 +70,17 @@ function LoginPage() {
         <div>
           <button type="submit">Login</button>
         </div>
+        <div>
+          <GoogleOAuthProvider clientId="614483928198-kob5tnjh1asuh1g2cq31ctp0cjgugl5s.apps.googleusercontent.com">
+            <GoogleLogin
+              onSuccess={onLoginGoogleSuccess}
+              onError={() => {
+                console.log('Login Failed');
+              }}
+            />
+          </GoogleOAuthProvider>
+        </div>
       </form>
-      <div>
-        <GoogleOAuthProvider clientId="614483928198-kob5tnjh1asuh1g2cq31ctp0cjgugl5s.apps.googleusercontent.com">
-          <GoogleLogin
-            onSuccess={onLoginGoogleSuccess}
-            onError={() => {
-              console.log('Login Failed');
-            }}
-            useOneTap
-          />
-        </GoogleOAuthProvider>
-      </div>
     </div>
   );
 }

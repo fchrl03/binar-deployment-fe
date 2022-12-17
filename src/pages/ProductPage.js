@@ -15,7 +15,12 @@ function ProductPage() {
   React.useEffect(() => {
     const getProductData = async () => {
       try {
-        const products = await axios.get('http://localhost:2000/products');
+        const jwtToken = localStorage.getItem('user_token');
+        const products = await axios.get('http://localhost:2000/products', {
+          headers: {
+            Authorization: `Bearer ${jwtToken}`,
+          },
+        });
         setProductData(products.data.data);
       } catch (err) {
         console.log(err);
@@ -35,7 +40,6 @@ function ProductPage() {
         if (validateTokenResponse.status !== 200) {
           navigate('/login');
         } else {
-          console.log(validateTokenResponse);
           setLoggedInUser(validateTokenResponse.data.data);
         }
       } catch (err) {
@@ -83,6 +87,7 @@ function ProductPage() {
     e.preventDefault();
 
     try {
+      const jwtToken = localStorage.getItem('user_token');
       const payload = new FormData();
 
       payload.append('name', nameState);
@@ -90,7 +95,11 @@ function ProductPage() {
       payload.append('stock', stockState);
       payload.append('picture', pictureState);
 
-      const productResponse = await axios.post('http://localhost:2000/products', payload);
+      const productResponse = await axios.post('http://localhost:2000/products', payload, {
+        headers: {
+          Authorization: `Bearer ${jwtToken}`,
+        },
+      });
       // console.log('response', productResponse);
 
       if (productResponse.status === 200) {
